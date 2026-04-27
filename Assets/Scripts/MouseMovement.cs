@@ -35,6 +35,7 @@ public class MouseMovement : MonoBehaviour
         yRotation += mouseX;
 
         //Apply rotations to trasform
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
     }
 }
