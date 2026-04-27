@@ -9,8 +9,8 @@ public class MouseMovement : MonoBehaviour
     float xRotation = 0f;
     float yRotation = 0f;
 
-    float topClamp = 0f; // -90f to look up
-    float bottomClamp = 0f; // 90f to look down
+    float topClamp = -90f; // -90f to look up
+    float bottomClamp = 90f; // 90f to look down
 
     void Start()
     {
