@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 lastPosition = new Vector3(0f, 0f, 0f);
 
-    private bool canJump = false;
+    private bool canJump = true;
 
     void Start()
     {
@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Ground check
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Debug.Log("Player is on ground");
         // REseting the default velocity
         if(isGrounded && velocity.y < 0)
         {
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         //Check if player can jump
         if (Input.GetButtonDown("Jump") && isGrounded && canJump)
         {
+            Debug.Log("Jumping");
             //Actually jumping
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
