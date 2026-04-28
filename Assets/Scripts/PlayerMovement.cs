@@ -34,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // Ground check
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        Debug.Log("Player is on ground");
         // REseting the default velocity
         if(isGrounded && velocity.y < 0)
         {
