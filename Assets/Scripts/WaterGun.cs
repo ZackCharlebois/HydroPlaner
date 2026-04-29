@@ -12,6 +12,9 @@ public class WaterGun : MonoBehaviour
 
     private bool isReloading = false;
 
+    [SerializeField] private AudioClip reloadSFX;
+    [SerializeField] private AudioSource shootSFXSource;
+
     private void Awake()
     {
         ps = GetComponent<ParticleSystem>();
@@ -25,6 +28,7 @@ public class WaterGun : MonoBehaviour
 
         if (Input.GetMouseButton(0) && ammo > 0)
         {
+            
             Shoot();
         }
 
