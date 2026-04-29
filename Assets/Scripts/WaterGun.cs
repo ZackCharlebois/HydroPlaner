@@ -25,7 +25,7 @@ public class WaterGun : MonoBehaviour
         }
 
         if (Input.GetMouseButton(0) && ammo > 0)
-        {
+        {  
             Shoot();
         }
 
