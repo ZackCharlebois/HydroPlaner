@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,9 @@ public class WaterCollision : MonoBehaviour
             GameEventDispatcher.TriggerParticleCollided(other);
             GameObject splashAtObject = Instantiate(splash[0], pos, Quaternion.LookRotation(-normal));
             splashAtObject.transform.SetParent(other.transform);
+
             Destroy(splashAtObject, timeLife);
+
         }
     }
 }
