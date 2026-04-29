@@ -37,10 +37,6 @@ public class WaterGun : MonoBehaviour
                 StartCoroutine(Reload());
             }
         }
-        else
-        {
-            Debug.Log("No more ammo");
-        }
     }
 
     public void Shoot()
