@@ -8,6 +8,7 @@ public class WaterGun : MonoBehaviour
     [SerializeField] private float maxAmmo = 50f;
     [SerializeField] private float reloadTime = 2f;
     [SerializeField] private float fireRate = 0.1f;
+    public float magLeft = 3;
     private ParticleSystem ps;
 
     private bool isReloading = false;
@@ -28,26 +29,33 @@ public class WaterGun : MonoBehaviour
             Shoot();
         }
 
-        if ((Input.GetKeyDown(KeyCode.R) && ammo < maxAmmo) || ammo <= 0)
+        if (magLeft != 0)
         {
-            isReloading = true;
-            StartCoroutine(Reload());
+            if ((Input.GetKeyDown(KeyCode.R) && ammo < maxAmmo) || ammo <= 0)
+            {
+                isReloading = true;
+                StartCoroutine(Reload());
+            }
+        }
+        else
+        {
+            Debug.Log("No more ammo");
         }
     }
 
     public void Shoot()
-    {
-        {
-            ps.Play();
-            Debug.Log("Boom");
-            ammo -= 1f + (Time.deltaTime / fireRate);
-        }
+    {   
+        ps.Play();
+        Debug.Log("Boom");
+        ammo -= 1f + (Time.deltaTime / fireRate);
+
     }
 
     private IEnumerator Reload()
     {
         yield return new WaitForSeconds(reloadTime);
         ammo = maxAmmo;
+        magLeft -= 1;
         isReloading = false;
     }
 }
