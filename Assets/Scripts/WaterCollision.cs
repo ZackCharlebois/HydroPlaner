@@ -14,6 +14,7 @@ public class WaterCollision : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         Debug.Log(other.name);
+        GameEventDispatcher.TriggerParticleCollided(other);
     }
 
     private void FixedUpdate()
