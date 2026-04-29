@@ -37,12 +37,12 @@ public class WaterGun : MonoBehaviour
 
     public void Shoot()
     {
-        //if (!ps.isPlaying)
-        {
+        
+        
             ps.Play();
             Debug.Log("Boom");
             ammo -= 1f + (Time.deltaTime / fireRate);
-        }
+        
     }
 
     private IEnumerator Reload()
