@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+using Unity.VisualScripting;
 
 public class InteractionSystem : MonoBehaviour
 {
     public TextMeshProUGUI text;
+    public float holdTimer = 0;
+    [SerializeField] private Boolean isTriggered = false;
 
     private void Awake()
     {
@@ -21,14 +25,14 @@ public class InteractionSystem : MonoBehaviour
             string tag = hit.collider.gameObject.tag;
             switch (tag)
             {
-                case "Reservoir": text.text = "Press E to refill water";
+                case "Reservoir": text.text = "Hold E to refill water";
 
                     break;
                 default:
                     text.text = "";
                     break;
             }
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
                 switch (tag)
                 {
@@ -44,8 +48,22 @@ public class InteractionSystem : MonoBehaviour
 
     public void resoivor()
     {
-        WaterGun waterGun = GetComponentInChildren<WaterGun>();
-        waterGun.magLeft = 3;
+        if (!isTriggered)
+        {
+            holdTimer += Time.deltaTime;
+            if (holdTimer >= 3f)
+            {
+                WaterGun waterGun = GetComponentInChildren<WaterGun>();
+                waterGun.magLeft = 3;
+                isTriggered = true;
+            }
+        }
+        else
+        {
+            holdTimer = 0;
+            isTriggered = false;
+        }
+
     }
 }
 
