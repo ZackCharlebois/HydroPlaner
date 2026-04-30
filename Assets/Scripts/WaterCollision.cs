@@ -12,13 +12,12 @@ public class WaterCollision : MonoBehaviour
     public GameObject[] splash = new GameObject[5];
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
-    // Start is called before the first frame update
     void Start()
     {
         ps = GetComponent<ParticleSystem>();
     }
 
-    void OnParticleCollision(GameObject other)
+    void OnParticleCollision(GameObject other) //When the water particles collide with another objects
     {
         int numCollisionEvents = ps.GetCollisionEvents(other, collisionEvents);
 
@@ -29,8 +28,8 @@ public class WaterCollision : MonoBehaviour
             Vector3 normal = collisionEvents[i].normal;
 
             Debug.Log(other.name);
-            GameEventDispatcher.TriggerParticleCollided(other);
-            GameObject splashAtObject = Instantiate(splash[0], pos, Quaternion.LookRotation(-normal));
+            GameEventDispatcher.TriggerParticleCollided(other); //Goes to the GameEventDispatcher
+            GameObject splashAtObject = Instantiate(splash[0], pos, Quaternion.LookRotation(-normal));//Creates a splash at the position of the collision
             splashAtObject.transform.SetParent(other.transform);
 
             Destroy(splashAtObject, timeLife);
