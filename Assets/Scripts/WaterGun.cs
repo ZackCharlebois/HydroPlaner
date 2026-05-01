@@ -51,6 +51,7 @@ public class WaterGun : MonoBehaviour
 
     private IEnumerator Reload() //reloading the gun
     {
+        Debug.Log("Reloading");
         yield return new WaitForSeconds(reloadTime);
         ammo = maxAmmo;
         magLeft -= 1;
