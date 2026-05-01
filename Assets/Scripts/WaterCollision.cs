@@ -28,7 +28,7 @@ public class WaterCollision : MonoBehaviour
             Vector3 normal = collisionEvents[i].normal;
 
             Debug.Log(other.name);
-            GameEventDispatcher.TriggerParticleCollided(other); //Goes to the GameEventDispatcher
+            ProjectileEventDispatcher.TriggerParticleCollided(other); //Goes to the ProjectileEventDispatcher
             GameObject splashAtObject = Instantiate(splash[0], pos, Quaternion.LookRotation(-normal));//Creates a splash at the position of the collision
             splashAtObject.transform.SetParent(other.transform);
 

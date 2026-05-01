@@ -2,19 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SoundType // Add new sounds here as they are implemented
+{
+    Shoot,
+    Reload,
+    Jump,
+    Damage,
+    Refill
+}
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    public AudioSource musicSource;
-    public AudioSource sfxSource;
-    public AudioClip musicClip;
+    // Music
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioClip musicClip;
+
+    // Sound Effects
+    [SerializeField] private AudioClip shootClip;
+    [SerializeField] private AudioClip reloadClip;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip damageClip;
+    [SerializeField] private AudioClip refillClip;
+    // Add new sounds here as they are implemented
 
     [Range(0f,1f)] public float musicVolume = 0.5f;
     [Range(0f, 1f)] public float sfxVolume = 0.5f;
 
+    // Tracks active sound effects so they can be stopped manually
+    private Dictionary<SoundType, AudioSource> activeSounds;
+
     private void Awake()
     {
+        // Makes AudioManager a Singleton and also persist between scenes
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -23,68 +44,143 @@ public class AudioManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        InitializeAudioManager();
-    }
 
-    private void InitializeAudioManager()
-    {
+        // Initialize music
         if (musicSource)
         {
             musicSource.volume = musicVolume;
         }
-        if (sfxSource)
-        {
-            sfxSource.volume = sfxVolume;
-        }
-        Debug.Log("Audio Initialized");
-    }
+        Debug.Log("Music Initialized");
 
-    public void PlayMusic(AudioSource music)
-    {
-        if (musicSource == null) return;
-        music.Play();
+        // Initialize active sound list
+        activeSounds = new Dictionary<SoundType, AudioSource>();
     }
-
-    public void PlayMusicClip(AudioClip clip)
+    //----------------------------------------------
+    // Music
+    public void PlayMusic()
     {
-        if (!musicSource || clip == null)
-        {
-            return;
-        }
-        musicSource.clip = clip;
+        if (!musicSource || !musicClip) return;
+
+        musicSource.clip = musicClip;
         musicSource.loop = true;
         musicSource.volume = musicVolume;
         musicSource.Play();
-        Debug.Log("Now playing music");
     }
 
-    public void StopMusic() 
+    public void StopMusic()
     {
-        if (musicSource) musicSource.Stop();    
+        if (musicSource) musicSource.Stop();
     }
+    //----------------------------------------------
+    // Sound Effects
 
-    public void PlaySFX(AudioSource source)
+    public void PlaySound(SoundType type)
     {
-        if (!source || source.clip == null) return;
-
-        source.PlayOneShot(source.clip, sfxVolume);
-    }
-
-    public void PlaySFXClip(AudioClip clip)
-    {
+        AudioClip clip = GetClip(type); // Gets audio clip of whatever sound is being played
         if (clip == null) return;
 
-        sfxSource.PlayOneShot(clip, sfxVolume);
+        //If already playing the same sound effect, do not play it again
+        if (activeSounds.ContainsKey(type)) return;
+
+        AudioSource source = gameObject.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.volume = sfxVolume;
+        source.spatialBlend = 0f; // Makes sound play at any distance from audio source
+        source.Play();
+
+        activeSounds[type] = source; // Adds sound to active sound list
+
+        StartCoroutine(RemoveAfterPlay(type, clip.length));
     }
 
-    public void StopSFX(AudioSource source)
+    // If sound is in the list of active sounds, then it is stopped
+    public void StopSound(SoundType type)
     {
-        if (source == null) return;
+        if (!activeSounds.ContainsKey(type)) return;
+
+        AudioSource source = activeSounds[type];
         source.Stop();
-        Debug.Log("SFX Stopped");
+        Destroy(source);
+        activeSounds.Remove(type);
+    }
+
+    // Assigns the sound clips to a sound type for use in PlaySound and StopSound
+    private AudioClip GetClip(SoundType type)
+    {
+        switch (type) // Add new sound effects here as they are implemented
+        {
+            case SoundType.Shoot: return shootClip;
+            case SoundType.Reload: return reloadClip;
+            case SoundType.Jump: return jumpClip;
+            case SoundType.Damage: return damageClip;
+            case SoundType.Refill: return refillClip;
+            default: return null;
+        }
+    }
+
+    // Removes sounds from list of active sounds when they finish playing
+    private IEnumerator RemoveAfterPlay(SoundType type, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        if (activeSounds.ContainsKey(type))
+        {
+            Destroy(activeSounds[type]);
+            activeSounds.Remove(type);
+        }
     }
 
 
+    //--------------------------------------------------
+    // Events to play sounds
+
+    private void OnEnable()
+    {
+        PlayerEventDispatcher.GunReloaded += OnReload;
+        PlayerEventDispatcher.GunShot += OnGunShot;
+        PlayerEventDispatcher.GunShootingStopped += OnGunStoppedShooting;
+        PlayerEventDispatcher.PlayerJumped += OnJump;
+        PlayerEventDispatcher.PlayerDamaged += OnDamage;
+        PlayerEventDispatcher.GunRefilled += OnRefill;
+
+    }
+
+    private void OnDisable()
+    {
+        PlayerEventDispatcher.GunReloaded -= OnReload;
+        PlayerEventDispatcher.GunShot -= OnGunShot;
+        PlayerEventDispatcher.GunShootingStopped -= OnGunStoppedShooting;
+        PlayerEventDispatcher.PlayerJumped -= OnJump;
+        PlayerEventDispatcher.PlayerDamaged -= OnDamage;
+        PlayerEventDispatcher.GunRefilled -= OnRefill;
+    }
+
+    private void OnReload()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Reload);
+    }
+    private void OnGunShot()
+    {
+        Debug.Log("Gun Shot Recieved By Audio Manager");
+        AudioManager.Instance.PlaySound(SoundType.Shoot);
+    }
+    private void OnGunStoppedShooting()
+    {
+        Debug.Log("Gun Shooting Stopped Recieved By Audio Manager");
+        AudioManager.Instance.StopSound(SoundType.Shoot);
+    }
+    private void OnJump()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Jump);
+    }
+    private void OnDamage()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Damage);
+    }
+    private void OnRefill()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Refill);
+    }
 
 
 
