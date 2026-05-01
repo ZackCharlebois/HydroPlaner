@@ -1790,8 +1790,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
   musicClip: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: 0c8e7c6dc3c6b4e41ae5703de001bf1c, type: 3}
+  reloadClip: {fileID: 8300000, guid: b1c94be0fe20f3049973a4f0b43433bf, type: 3}
+  jumpClip: {fileID: 0}
+  damageClip: {fileID: 0}
+  refillClip: {fileID: 0}
   musicVolume: 0.5
   sfxVolume: 0.5
 --- !u!4 &1172408114
@@ -7238,7 +7242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeLife: 10
   splash:
-  - {fileID: 346737176464821321, guid: 9791c6323e233834e9905c08749d34c6, type: 3}
+  - {fileID: 8633334596033849510, guid: f32af431810f5d24a984342954c5a804, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
