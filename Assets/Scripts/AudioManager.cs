@@ -8,7 +8,12 @@ public enum SoundType // Add new sounds here as they are implemented
     Reload,
     Jump,
     Damage,
-    Refill
+    Refill,
+    Death,
+    Hole,
+    Enemy,
+    Resevoir,
+    Tripwire
 }
 
 public class AudioManager : MonoBehaviour
@@ -25,6 +30,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip damageClip;
     [SerializeField] private AudioClip refillClip;
+    [SerializeField] private AudioClip deathClip;
+    [SerializeField] private AudioClip holeClip;
+    [SerializeField] private AudioClip enemyClip;
+    [SerializeField] private AudioClip resevoirClip;
+    [SerializeField] private AudioClip tripwireClip;
     // Add new sounds here as they are implemented
 
     [Range(0f,1f)] public float musicVolume = 0.5f;
@@ -114,6 +124,11 @@ public class AudioManager : MonoBehaviour
             case SoundType.Jump: return jumpClip;
             case SoundType.Damage: return damageClip;
             case SoundType.Refill: return refillClip;
+            case SoundType.Death: return deathClip;
+            case SoundType.Hole: return holeClip;
+            case SoundType.Enemy: return enemyClip;
+            case SoundType.Resevoir: return resevoirClip;
+            case SoundType.Tripwire: return tripwireClip;
             default: return null;
         }
     }
@@ -142,6 +157,11 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.PlayerJumped += OnJump;
         PlayerEventDispatcher.PlayerDamaged += OnDamage;
         PlayerEventDispatcher.GunRefilled += OnRefill;
+        PlayerEventDispatcher.GunRefillStopped += OnRefillStop;
+        PlayerEventDispatcher.HoleApproached += OnHoleApproach;
+        PlayerEventDispatcher.EnemyApproached += OnEnemyApproach;
+        PlayerEventDispatcher.ResevoirApproached += OnResevoirApproach;
+        PlayerEventDispatcher.TripwireTriggered += OnTripwire;
 
     }
 
@@ -153,6 +173,11 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.PlayerJumped -= OnJump;
         PlayerEventDispatcher.PlayerDamaged -= OnDamage;
         PlayerEventDispatcher.GunRefilled -= OnRefill;
+        PlayerEventDispatcher.GunRefillStopped -= OnRefillStop;
+        PlayerEventDispatcher.HoleApproached -= OnHoleApproach;
+        PlayerEventDispatcher.EnemyApproached -= OnEnemyApproach;
+        PlayerEventDispatcher.ResevoirApproached -= OnResevoirApproach;
+        PlayerEventDispatcher.TripwireTriggered -= OnTripwire;
     }
 
     private void OnReload()
@@ -181,7 +206,29 @@ public class AudioManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySound(SoundType.Refill);
     }
-
-
+    private void OnRefillStop()
+    {
+        AudioManager.Instance.StopSound(SoundType.Refill);
+    }
+    private void OnDeath()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Death);
+    }
+    private void OnHoleApproach()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Hole);
+    }
+    private void OnEnemyApproach()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Enemy);
+    }
+    private void OnResevoirApproach()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Resevoir);
+    }
+    private void OnTripwire()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Tripwire);
+    }
 
 }

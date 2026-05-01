@@ -16,10 +16,16 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static event GameEventHandler GunShootingStopped;
     public static event GameEventHandler GunReloaded;
     public static event GameEventHandler GunRefilled;
+    public static event GameEventHandler GunRefillStopped;
 
     public static event GameEventHandler PlayerDied;
     public static event GameEventHandler PlayerJumped;
     public static event GameEventHandler PlayerDamaged;
+
+    public static event GameEventHandler HoleApproached;
+    public static event GameEventHandler EnemyApproached;
+    public static event GameEventHandler ResevoirApproached;
+    public static event GameEventHandler TripwireTriggered;
 
     public static void TriggerGunShot()
     {
@@ -41,6 +47,11 @@ public class PlayerEventDispatcher : MonoBehaviour
         GunRefilled?.Invoke();
     }
 
+    public static void TriggerGunRefillStopped()
+    {
+        GunRefillStopped?.Invoke();
+    }
+
     public static void TriggerPlayerDied()
     {
         PlayerDied?.Invoke();
@@ -54,6 +65,26 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static void TriggerPlayerDamaged()
     {
         PlayerDamaged?.Invoke();
+    }
+
+    public static void TriggerHoleApproached()
+    {
+        HoleApproached?.Invoke();
+    }
+
+    public static void TriggerEnemyApproached()
+    {
+        EnemyApproached?.Invoke();
+    }
+
+    public static void TriggerResevoirApproached()
+    {
+        ResevoirApproached?.Invoke();
+    }
+
+    public static void TriggerTripwireTriggered()
+    {
+        TripwireTriggered?.Invoke();
     }
 
 
