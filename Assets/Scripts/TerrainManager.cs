@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Handles projectile collisions with Terrain elements
 public class TerrainManager : MonoBehaviour
 {
     private HashSet<GameObject> terrainObjects;
@@ -9,7 +9,7 @@ public class TerrainManager : MonoBehaviour
     [SerializeField] private Color waterColor = Color.blue;
     [SerializeField] private float glowIntensity = 5.0f;
 
-    void Awake()
+    void Awake() //Gets list of all game objects with the "Terrain" tag
     {
         terrainObjects = new HashSet<GameObject>();
 
@@ -20,17 +20,17 @@ public class TerrainManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void OnEnable() //Enables event listening
     {
-        GameEventDispatcher.ParticleCollided += HandleHit;
+        ProjectileEventDispatcher.ParticleCollided += HandleHit;
     }
 
-    private void OnDisable()
+    private void OnDisable() //Disables event listening
     {
-        GameEventDispatcher.ParticleCollided -= HandleHit;
+        ProjectileEventDispatcher.ParticleCollided -= HandleHit;
     }
 
-    void HandleHit(GameObject hitObject)
+    void HandleHit(GameObject hitObject) //Runs when a terrain object is hit by a particle
     {
         if (!terrainObjects.Contains(hitObject)) return;
 
