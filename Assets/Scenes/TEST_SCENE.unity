@@ -621,6 +621,131 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
+--- !u!1 &392852110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 2900041040384279248, guid: cf478164043f8574e82ebc526fb63233,
+    type: 3}
+  m_PrefabInstance: {fileID: 4105630422675394925}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 392852115}
+  - component: {fileID: 392852114}
+  - component: {fileID: 392852113}
+  - component: {fileID: 392852112}
+  - component: {fileID: 392852111}
+  m_Layer: 0
+  m_Name: SpikeWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &392852111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4053179073446349623, guid: cf478164043f8574e82ebc526fb63233,
+    type: 3}
+  m_PrefabInstance: {fileID: 4105630422675394925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392852110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49d8fab4a161e4439b2074dc8b99448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!64 &392852112
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 325492358364818621, guid: cf478164043f8574e82ebc526fb63233,
+    type: 3}
+  m_PrefabInstance: {fileID: 4105630422675394925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392852110}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5408462715170582353, guid: bd7d5b6c22ea38a469b61171847885c7, type: 3}
+--- !u!23 &392852113
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3692951171406193413, guid: cf478164043f8574e82ebc526fb63233,
+    type: 3}
+  m_PrefabInstance: {fileID: 4105630422675394925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392852110}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 130f7539472794947bc4ee3539e6e310, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &392852114
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1502804589342595023, guid: cf478164043f8574e82ebc526fb63233,
+    type: 3}
+  m_PrefabInstance: {fileID: 4105630422675394925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392852110}
+  m_Mesh: {fileID: 5408462715170582353, guid: bd7d5b6c22ea38a469b61171847885c7, type: 3}
+--- !u!4 &392852115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 2554899274619459690, guid: cf478164043f8574e82ebc526fb63233,
+    type: 3}
+  m_PrefabInstance: {fileID: 4105630422675394925}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392852110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.07, y: 0.28, z: -9.0572}
+  m_LocalScale: {x: 48.808693, y: 48.808693, z: 83.0968}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,11 +2519,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 0}
   musicClip: {fileID: 0}
-  shootClip: {fileID: 8300000, guid: 0c8e7c6dc3c6b4e41ae5703de001bf1c, type: 3}
+  shootClip: {fileID: 8300000, guid: 0cbd51cd24bc43a4eaf673c8f2003825, type: 3}
   reloadClip: {fileID: 8300000, guid: b1c94be0fe20f3049973a4f0b43433bf, type: 3}
   jumpClip: {fileID: 0}
   damageClip: {fileID: 0}
   refillClip: {fileID: 0}
+  deathClip: {fileID: 0}
+  holeClip: {fileID: 0}
+  enemyClip: {fileID: 0}
+  resevoirClip: {fileID: 0}
+  tripwireClip: {fileID: 0}
+  emptyClip: {fileID: 8300000, guid: 21cfc7c42175c41469ed93f6b0c15e9f, type: 3}
+  finishedShootingClip: {fileID: 8300000, guid: e6f46f87e207cff4b94fa4fde288b6de,
+    type: 3}
   musicVolume: 0.5
   sfxVolume: 0.5
 --- !u!4 &1172408114
@@ -3048,7 +3181,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -3870,7 +4003,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 250
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -3973,66 +4106,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    m_BurstCount: 1
-    m_Bursts:
-    - serializedVersion: 2
-      time: 0
-      countCurve:
-        serializedVersion: 2
-        minMaxState: 0
-        scalar: 1
-        minScalar: 30
-        maxCurve:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        minCurve:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-      cycleCount: 1
-      repeatInterval: 0.01
-      probability: 1
+    m_BurstCount: 0
+    m_Bursts: []
   SizeModule:
     enabled: 0
     curve:

@@ -10,52 +10,83 @@ public class WaterGun : MonoBehaviour
     [SerializeField] private float ammo = 50f;
     [SerializeField] private float maxAmmo = 50f;
     [SerializeField] private float reloadTime = 2f;
-    [SerializeField] private float fireRate = 0.1f;
+    [SerializeField] private float fireRate = 10f;
     public float magLeft = 3;
     
     private ParticleSystem ps;
 
     private bool isReloading = false;
+    private bool isShooting = false;
+    private float fireTimer = 0f;
 
     private void Awake()
     {
         ps = GetComponent<ParticleSystem>();
     }
-    private void FixedUpdate()
+    private void Update()
     {
-        if (isReloading) 
-        {
-            return;
-        }
+        HandleInput();
+        HandleShooting();
+    }
 
-        if (Input.GetMouseButton(0) && ammo > 0)
-        {  
+    private void HandleInput() // Handles user inputs for shooting and stopping shooting
+    {
+        if (Input.GetMouseButtonDown(0) && ammo > 0)
+        {
+            StartShooting();
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            StopShooting();
+        }
+        if (Input.GetMouseButtonDown(0) && ammo <= 0)
+        {
+            PlayerEventDispatcher.TriggerGunEmptied();
+        }
+    }
+
+    private void StartShooting() //Starts shooting state
+    {
+        if (isShooting) return;
+        isShooting = true;
+        ps.Play();
+        fireTimer = 0f;
+        Shoot();
+        PlayerEventDispatcher.TriggerGunShot();
+    }
+
+    private void StopShooting() //Stops shooting state
+    {
+        if (!isShooting) return;
+        isShooting = false;
+        ps.Stop();
+        PlayerEventDispatcher.TriggerGunShootingStopped();
+    }
+
+    private void HandleShooting() //Controls firerate of gun
+    {
+        if (!isShooting) return;
+
+        ammo -= fireRate;
+
+        fireTimer += Time.deltaTime;
+
+        if (fireTimer >= 1f / fireRate)
+        {
+            fireTimer = 0f;
             Shoot();
         }
-
-        if (magLeft != 0)
-        {
-            if ((Input.GetKeyDown(KeyCode.R) && ammo < maxAmmo) || ammo <= 0)
-            {
-                isReloading = true;
-                StartCoroutine(Reload());
-            }
-        }
     }
 
-    public void Shoot() //Shooting the gun
-    {   
-        ps.Play();
-        ammo -= 1f + (Time.deltaTime / fireRate);
-
-    }
-
-    private IEnumerator Reload() //reloading the gun
+    public void Shoot() //Counts remaining ammo when shooting
     {
-        Debug.Log("Reloading");
-        yield return new WaitForSeconds(reloadTime);
-        ammo = maxAmmo;
-        magLeft -= 1;
-        isReloading = false;
+        Debug.Log(ammo);
+        if (ammo <= 0)
+        {
+            StopShooting();
+            return;
+        }
+        ammo -= fireRate;
     }
+
 }
