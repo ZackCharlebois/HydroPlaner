@@ -32,7 +32,7 @@ public class InteractionSystem : MonoBehaviour
             switch (tag)
             {
                 case "Reservoir": text.text = "Hold E to refill water";
-                    if (waterGun.magLeft < 3)
+                    if (waterGun.ammo < waterGun.maxAmmo)
                     {
                         if (Input.GetKey(KeyCode.E))
                         {
@@ -68,14 +68,14 @@ public class InteractionSystem : MonoBehaviour
     public void resoivor(WaterGun waterGun) //Refills the water gun
     {
         slider.value = 0;
-        if (!isTriggered && waterGun.magLeft < 3) //Players must hold the E button for 3 seconds to refill the gun
+        if (!isTriggered && waterGun.ammo < waterGun.maxAmmo) //Players must hold the E button for 3 seconds to refill the gun
         {
             sliderObject.SetActive(true);
             holdTimer += Time.deltaTime;
             slider.value = holdTimer / 3f;
             if (holdTimer >= 3f)
             {
-                waterGun.magLeft = 3;
+                waterGun.ammo = waterGun.maxAmmo;
                 isTriggered = true;
             }
         }
