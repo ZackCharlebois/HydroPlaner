@@ -43,6 +43,10 @@ public class WaterGun : MonoBehaviour
         {
             PlayerEventDispatcher.TriggerGunEmptied();
         }
+        if (Input.GetMouseButton(0) && ammo <= 0) 
+        {
+            StopShooting();
+        }
     }
 
     private void StartShooting() //Starts shooting state
