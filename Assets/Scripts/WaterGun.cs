@@ -7,15 +7,12 @@ using UnityEngine;
 public class WaterGun : MonoBehaviour
 {
 
-    [SerializeField] private float ammo = 50f;
-    [SerializeField] private float maxAmmo = 50f;
-    [SerializeField] private float reloadTime = 2f;
+    public float ammo = 50f;
+    public float maxAmmo = 50f;
     [SerializeField] private float fireRate = 10f;
-    public float magLeft = 3;
     
     private ParticleSystem ps;
 
-    private bool isReloading = false;
     private bool isShooting = false;
     private float fireTimer = 0f;
 
