@@ -17,6 +17,7 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static event GameEventHandler GunReloaded;
     public static event GameEventHandler GunRefilled;
     public static event GameEventHandler GunRefillStopped;
+    public static event GameEventHandler GunEmptied;
 
     public static event GameEventHandler PlayerDied;
     public static event GameEventHandler PlayerJumped;
@@ -87,5 +88,9 @@ public class PlayerEventDispatcher : MonoBehaviour
         TripwireTriggered?.Invoke();
     }
 
+    public static void TriggerGunEmptied()
+    {
+        GunEmptied?.Invoke();
+    }
 
 }

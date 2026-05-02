@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum SoundType // Add new sounds here as they are implemented
@@ -13,7 +14,9 @@ public enum SoundType // Add new sounds here as they are implemented
     Hole,
     Enemy,
     Resevoir,
-    Tripwire
+    Tripwire,
+    Empty,
+    FinishedShooting
 }
 
 public class AudioManager : MonoBehaviour
@@ -35,6 +38,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip enemyClip;
     [SerializeField] private AudioClip resevoirClip;
     [SerializeField] private AudioClip tripwireClip;
+    [SerializeField] private AudioClip emptyClip;
+    [SerializeField] private AudioClip finishedShootingClip;
     // Add new sounds here as they are implemented
 
     [Range(0f,1f)] public float musicVolume = 0.5f;
@@ -129,6 +134,8 @@ public class AudioManager : MonoBehaviour
             case SoundType.Enemy: return enemyClip;
             case SoundType.Resevoir: return resevoirClip;
             case SoundType.Tripwire: return tripwireClip;
+            case SoundType.Empty: return emptyClip;
+            case SoundType.FinishedShooting: return finishedShootingClip;
             default: return null;
         }
     }
@@ -162,6 +169,7 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.EnemyApproached += OnEnemyApproach;
         PlayerEventDispatcher.ResevoirApproached += OnResevoirApproach;
         PlayerEventDispatcher.TripwireTriggered += OnTripwire;
+        PlayerEventDispatcher.GunEmptied += OnEmpty;
 
     }
 
@@ -178,6 +186,7 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.EnemyApproached -= OnEnemyApproach;
         PlayerEventDispatcher.ResevoirApproached -= OnResevoirApproach;
         PlayerEventDispatcher.TripwireTriggered -= OnTripwire;
+        PlayerEventDispatcher.GunEmptied -= OnEmpty;
     }
 
     private void OnReload()
@@ -192,6 +201,7 @@ public class AudioManager : MonoBehaviour
     private void OnGunStoppedShooting()
     {
         Debug.Log("Gun Shooting Stopped Recieved By Audio Manager");
+        AudioManager.Instance.PlaySound(SoundType.FinishedShooting);
         AudioManager.Instance.StopSound(SoundType.Shoot);
     }
     private void OnJump()
@@ -229,6 +239,10 @@ public class AudioManager : MonoBehaviour
     private void OnTripwire()
     {
         AudioManager.Instance.PlaySound(SoundType.Tripwire);
+    }
+    private void OnEmpty()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Empty);
     }
 
 }
