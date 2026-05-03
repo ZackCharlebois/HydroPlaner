@@ -16,7 +16,8 @@ public enum SoundType // Add new sounds here as they are implemented
     Resevoir,
     Tripwire,
     Empty,
-    FinishedShooting
+    FinishedShooting,
+    Walk
 }
 
 public class AudioManager : MonoBehaviour
@@ -40,6 +41,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip tripwireClip;
     [SerializeField] private AudioClip emptyClip;
     [SerializeField] private AudioClip finishedShootingClip;
+    [SerializeField] private AudioClip walkClip;
     // Add new sounds here as they are implemented
 
     [Range(0f,1f)] public float musicVolume = 0.5f;
@@ -101,6 +103,8 @@ public class AudioManager : MonoBehaviour
         source.clip = clip;
         source.volume = sfxVolume;
         source.spatialBlend = 0f; // Makes sound play at any distance from audio source
+        source.loop = false;
+        if(type == SoundType.Walk) { source.loop = true; }
         source.Play();
 
         activeSounds[type] = source; // Adds sound to active sound list
@@ -136,6 +140,7 @@ public class AudioManager : MonoBehaviour
             case SoundType.Tripwire: return tripwireClip;
             case SoundType.Empty: return emptyClip;
             case SoundType.FinishedShooting: return finishedShootingClip;
+            case SoundType.Walk: return walkClip;
             default: return null;
         }
     }
@@ -145,7 +150,7 @@ public class AudioManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
 
-        if (activeSounds.ContainsKey(type))
+        if (activeSounds.ContainsKey(type) && type != SoundType.Walk)
         {
             Destroy(activeSounds[type]);
             activeSounds.Remove(type);
@@ -170,6 +175,8 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.ResevoirApproached += OnResevoirApproach;
         PlayerEventDispatcher.TripwireTriggered += OnTripwire;
         PlayerEventDispatcher.GunEmptied += OnEmpty;
+        PlayerEventDispatcher.PlayerMovementStarted += OnStartMove;
+        PlayerEventDispatcher.PlayerMovementStopped += OnStopMove;
 
     }
 
@@ -187,6 +194,8 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.ResevoirApproached -= OnResevoirApproach;
         PlayerEventDispatcher.TripwireTriggered -= OnTripwire;
         PlayerEventDispatcher.GunEmptied -= OnEmpty;
+        PlayerEventDispatcher.PlayerMovementStarted -= OnStartMove;
+        PlayerEventDispatcher.PlayerMovementStopped -= OnStopMove;
     }
 
     private void OnReload()
@@ -243,6 +252,14 @@ public class AudioManager : MonoBehaviour
     private void OnEmpty()
     {
         AudioManager.Instance.PlaySound(SoundType.Empty);
+    }
+    private void OnStartMove()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Walk);
+    }
+    private void OnStopMove()
+    {
+        AudioManager.Instance.StopSound(SoundType.Walk);
     }
 
 }
