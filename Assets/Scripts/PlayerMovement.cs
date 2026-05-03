@@ -17,8 +17,9 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 velocity;
 
-    bool isGrounded;
-    bool isMoving;
+    private bool isGrounded;
+    private bool isMoving;
+    private bool wasMoving;
 
     private Vector3 lastPosition = new Vector3(0f, 0f, 0f);
 
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Jumping");
             //Actually jumping
+            PlayerEventDispatcher.TriggerPlayerJumped();
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
@@ -64,14 +66,23 @@ public class PlayerMovement : MonoBehaviour
         //Executing the jump
         controller.Move(velocity * Time.deltaTime);
 
-        if (lastPosition != gameObject.transform.position && isGrounded == true)
+        bool isCurrentlyMoving = (lastPosition != transform.position) && isGrounded;
+
+        // Detect start moving
+        if (!wasMoving && isCurrentlyMoving)
         {
-            isMoving = true;
+            PlayerEventDispatcher.TriggerPlayerMovementStarted();
         }
-        else
+
+        // Detect stop moving
+        if (wasMoving && !isCurrentlyMoving)
         {
-            isMoving = false;
+            PlayerEventDispatcher.TriggerPlayerMovementStopped();
         }
+
+        // Update states
+        isMoving = isCurrentlyMoving;
+        wasMoving = isCurrentlyMoving;
 
         lastPosition = gameObject.transform.position;
     }
