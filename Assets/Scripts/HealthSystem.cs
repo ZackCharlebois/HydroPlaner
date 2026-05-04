@@ -8,7 +8,7 @@ public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private int maxHp = 3;
     [SerializeField] private int hp = 3;
-    [SerializeField] private int damage = 3;
+    [SerializeField] private int damage = 1;
 
     private void OnEnable()
     {

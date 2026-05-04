@@ -11,13 +11,16 @@ public enum SoundType // Add new sounds here as they are implemented
     Damage,
     Refill,
     Death,
+    DeathLoud,
     Hole,
     Enemy,
     Resevoir,
     Tripwire,
     Empty,
     FinishedShooting,
-    Walk
+    Walk,
+    Fell,
+    Job
 }
 
 public class AudioManager : MonoBehaviour
@@ -35,6 +38,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip damageClip;
     [SerializeField] private AudioClip refillClip;
     [SerializeField] private AudioClip deathClip;
+    [SerializeField] private AudioClip deathLoudClip;
     [SerializeField] private AudioClip holeClip;
     [SerializeField] private AudioClip enemyClip;
     [SerializeField] private AudioClip resevoirClip;
@@ -42,6 +46,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip emptyClip;
     [SerializeField] private AudioClip finishedShootingClip;
     [SerializeField] private AudioClip walkClip;
+    [SerializeField] private AudioClip fellInHoleClip;
+    [SerializeField] private AudioClip jobClip;
     // Add new sounds here as they are implemented
 
     [Range(0f,1f)] public float musicVolume = 0.5f;
@@ -134,6 +140,7 @@ public class AudioManager : MonoBehaviour
             case SoundType.Damage: return damageClip;
             case SoundType.Refill: return refillClip;
             case SoundType.Death: return deathClip;
+            case SoundType.DeathLoud: return deathLoudClip;
             case SoundType.Hole: return holeClip;
             case SoundType.Enemy: return enemyClip;
             case SoundType.Resevoir: return resevoirClip;
@@ -141,6 +148,8 @@ public class AudioManager : MonoBehaviour
             case SoundType.Empty: return emptyClip;
             case SoundType.FinishedShooting: return finishedShootingClip;
             case SoundType.Walk: return walkClip;
+            case SoundType.Fell: return fellInHoleClip;
+                case SoundType.Job: return jobClip;
             default: return null;
         }
     }
@@ -178,6 +187,7 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.PlayerMovementStarted += OnStartMove;
         PlayerEventDispatcher.PlayerMovementStopped += OnStopMove;
         PlayerEventDispatcher.PlayerDied += OnDeath;
+        PlayerEventDispatcher.PlayerFellInHole += OnFall;
 
     }
 
@@ -198,6 +208,7 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.PlayerMovementStarted -= OnStartMove;
         PlayerEventDispatcher.PlayerMovementStopped -= OnStopMove;
         PlayerEventDispatcher.PlayerDied += OnDeath;
+        PlayerEventDispatcher.PlayerFellInHole -= OnFall;
     }
 
     private void OnReload()
@@ -234,7 +245,15 @@ public class AudioManager : MonoBehaviour
     private void OnDeath()
     {
         AudioManager.Instance.StopSound(SoundType.Walk);
-        AudioManager.Instance.PlaySound(SoundType.Death);
+        float num = Random.Range(1, 100);
+        if (num == 7)
+        {
+            AudioManager.Instance.PlaySound(SoundType.DeathLoud);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound(SoundType.Death);
+        }
         Debug.Log("Play Death Sound");
     }
     private void OnHoleApproach()
@@ -266,4 +285,8 @@ public class AudioManager : MonoBehaviour
         AudioManager.Instance.StopSound(SoundType.Walk);
     }
 
+    private void OnFall()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Fell);
+    }
 }

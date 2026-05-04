@@ -27,6 +27,7 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static event GameEventHandler PlayerDamaged;
     public static event GameEventHandler PlayerMovementStarted;
     public static event GameEventHandler PlayerMovementStopped;
+    public static event GameEventHandler PlayerFellInHole;
     
     // Other Events
     public static event GameEventHandler HoleApproached;
@@ -88,6 +89,11 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static void TriggerPlayerMovementStopped()
     {
         PlayerMovementStopped?.Invoke();
+    }
+
+    public static void TriggerPlayerFellInHole()
+    {
+        PlayerFellInHole?.Invoke();
     }
 
     //-----------------Other Events-----------------------
