@@ -16,12 +16,15 @@ public class WaterGun : MonoBehaviour
     private bool isShooting = false;
     private float fireTimer = 0f;
 
+    private bool playerDead = false;
+
     private void Awake()
     {
         ps = GetComponent<ParticleSystem>();
     }
     private void Update()
     {
+        if (playerDead) return;
         HandleInput();
         HandleShooting();
     }
@@ -90,4 +93,18 @@ public class WaterGun : MonoBehaviour
         ammo -= fireRate;
     }
 
+    private void OnEnable()
+    {
+        PlayerEventDispatcher.PlayerDied += OnDeath;
+    }
+
+    private void OnDisable()
+    {
+        PlayerEventDispatcher.PlayerDied -= OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        playerDead = true;
+    }
 }

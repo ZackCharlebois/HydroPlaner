@@ -12,6 +12,8 @@ public class MouseMovement : MonoBehaviour
     float topClamp = -90f; // -90f to look up
     float bottomClamp = 90f; // 90f to look down
 
+    private bool playerDead = false;
+
     void Start()
     {
         //Locking the cursor and making it invisible
@@ -21,6 +23,7 @@ public class MouseMovement : MonoBehaviour
  
     void Update()
     {
+        if (playerDead) return;
         //Get mouse inputs
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -37,5 +40,21 @@ public class MouseMovement : MonoBehaviour
         //Apply rotations to trasform
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
+    }
+
+    private void OnEnable()
+    {
+        PlayerEventDispatcher.PlayerDied += OnDeath;
+    }
+
+    private void OnDisable()
+    {
+        PlayerEventDispatcher.PlayerDied -= OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        playerDead = true;
+        //Camera.main.transform.position = new Vector3()
     }
 }
