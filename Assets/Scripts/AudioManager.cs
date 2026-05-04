@@ -177,6 +177,7 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.GunEmptied += OnEmpty;
         PlayerEventDispatcher.PlayerMovementStarted += OnStartMove;
         PlayerEventDispatcher.PlayerMovementStopped += OnStopMove;
+        PlayerEventDispatcher.PlayerDied += OnDeath;
 
     }
 
@@ -196,6 +197,7 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.GunEmptied -= OnEmpty;
         PlayerEventDispatcher.PlayerMovementStarted -= OnStartMove;
         PlayerEventDispatcher.PlayerMovementStopped -= OnStopMove;
+        PlayerEventDispatcher.PlayerDied += OnDeath;
     }
 
     private void OnReload()
@@ -231,7 +233,9 @@ public class AudioManager : MonoBehaviour
     }
     private void OnDeath()
     {
+        AudioManager.Instance.StopSound(SoundType.Walk);
         AudioManager.Instance.PlaySound(SoundType.Death);
+        Debug.Log("Play Death Sound");
     }
     private void OnHoleApproach()
     {
