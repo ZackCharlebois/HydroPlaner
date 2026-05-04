@@ -34,6 +34,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float num = Random.Range(0, 100000);
+        if(num == 7)
+        {
+            AudioManager.Instance.PlaySound(SoundType.Job);
+        }
             if (controller == null) return;
             // Ground check
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
