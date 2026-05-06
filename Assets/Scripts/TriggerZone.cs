@@ -10,7 +10,8 @@ public enum TriggerType
     Resevoir,
     Tripwire,
     Death,
-    Test
+    Test,
+    Fall
 }
 // All purpose player trigger for various things
 // Select what type of trigger zone in the inspector
@@ -58,6 +59,11 @@ public class TriggerZone : MonoBehaviour
                 case TriggerType.Test:
                     {
                         PlayerEventDispatcher.TriggerGunReloaded();
+                        break;
+                    }
+                case TriggerType.Fall:
+                    {
+                        PlayerEventDispatcher.TriggerPlayerFellInHole();
                         break;
                     }
                 default: break;
