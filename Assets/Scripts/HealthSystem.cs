@@ -31,7 +31,7 @@ public class HealthSystem : MonoBehaviour
         {
             hp -= damage;
             isInvincible = true;
-            healthImages[hp].enabled = false; 
+            StartCoroutine(FlashInvincibility());
             Invoke("resetInvincible", invincibilityDuration); //If they're invincible, why can I still see them?
         }
 
@@ -44,6 +44,18 @@ public class HealthSystem : MonoBehaviour
     private void resetInvincible() //Resets the invincibility after a certain amount of time, allowing the player to be damaged again.
     {
         isInvincible = false;
+    }
+
+    private IEnumerator FlashInvincibility() //Flashes the player's sprite to indicate invincibility.
+    {
+        while (isInvincible)
+        {
+            healthImages[hp].enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            healthImages[hp].enabled = true;
+            yield return new WaitForSeconds(0.1f);
+        }
+        healthImages[hp].enabled = false;
     }
 
 }
