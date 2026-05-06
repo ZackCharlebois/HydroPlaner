@@ -71,6 +71,8 @@ public class EnemyController : MonoBehaviour
         Vector3 planeDir = _direction;
 
 
+        //I WILL ADD COMMENTS SOON I AM VERY TIRED!!!!
+
         //Designed so hopefully if a RayCast misses it still kind of works
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down + Vector3.Scale(transform.forward, new Vector3(.0f, .0f, .0f))), out hit, 1000f))
         {
