@@ -88,6 +88,7 @@ public class MenuScript : MonoBehaviour
 
     private void OnDeath()
     {
+        AudioManager.Instance.PlaySound(SoundType.Job);
         isDead = true;
 
         Cursor.lockState = CursorLockMode.Confined;
