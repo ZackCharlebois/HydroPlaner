@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI; //don't miss that you need this for UnityEvent
@@ -31,14 +32,16 @@ public class HealthSystem : MonoBehaviour
         {
             hp -= damage;
             isInvincible = true;
+            healthImages[hp].enabled = false;
+            if (hp <= 0)
+            {
+                PlayerEventDispatcher.TriggerPlayerDied();
+                return;
+            }
             StartCoroutine(FlashInvincibility());
             Invoke("resetInvincible", invincibilityDuration); //If they're invincible, why can I still see them?
         }
 
-        if (hp <= 0)
-        {
-            PlayerEventDispatcher.TriggerPlayerDied();
-        }
     }
 
     private void resetInvincible() //Resets the invincibility after a certain amount of time, allowing the player to be damaged again.
