@@ -70,17 +70,20 @@ public class InteractionSystem : MonoBehaviour
         slider.value = 0;
         if (!isTriggered && waterGun.ammo < waterGun.maxAmmo) //Players must hold the E button for 3 seconds to refill the gun
         {
+            PlayerEventDispatcher.TriggerGunRefilled();
             sliderObject.SetActive(true);
             holdTimer += Time.deltaTime;
             slider.value = holdTimer / 3f;
             if (holdTimer >= 3f)
             {
+                PlayerEventDispatcher.TriggerGunRefillStopped();
                 waterGun.ammo = waterGun.maxAmmo;
                 isTriggered = true;
             }
         }
         else
         {
+            PlayerEventDispatcher.TriggerGunRefillStopped();
             sliderObject.SetActive(false);
             holdTimer = 0;
             slider.value = 0;

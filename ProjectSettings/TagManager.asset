@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Terrain
   - Reservoir
+  - ShootableTerrain
   layers:
   - Default
   - TransparentFX
