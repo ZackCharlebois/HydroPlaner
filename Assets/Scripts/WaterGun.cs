@@ -7,8 +7,9 @@ using UnityEngine;
 public class WaterGun : MonoBehaviour
 {
 
-    public float ammo = 50f;
-    public float maxAmmo = 50f;
+    //Set high for testing***
+    public float ammo = 300f;
+    public float maxAmmo = 300f;
     [SerializeField] private float fireRate = 10f;
     
     private ParticleSystem ps;
