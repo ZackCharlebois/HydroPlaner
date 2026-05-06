@@ -25,7 +25,11 @@ public class WaterGun : MonoBehaviour
     }
     private void Update()
     {
-        if (playerDead) return;
+        if (playerDead)
+        {
+            StopShooting();
+            return;
+        }
         HandleInput();
         HandleShooting();
     }
