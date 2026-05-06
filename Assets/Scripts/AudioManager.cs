@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum SoundType // Add new sounds here as they are implemented
@@ -10,10 +11,16 @@ public enum SoundType // Add new sounds here as they are implemented
     Damage,
     Refill,
     Death,
+    DeathLoud,
     Hole,
     Enemy,
     Resevoir,
-    Tripwire
+    Tripwire,
+    Empty,
+    FinishedShooting,
+    Walk,
+    Fell,
+    Job
 }
 
 public class AudioManager : MonoBehaviour
@@ -31,10 +38,16 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip damageClip;
     [SerializeField] private AudioClip refillClip;
     [SerializeField] private AudioClip deathClip;
+    [SerializeField] private AudioClip deathLoudClip;
     [SerializeField] private AudioClip holeClip;
     [SerializeField] private AudioClip enemyClip;
     [SerializeField] private AudioClip resevoirClip;
     [SerializeField] private AudioClip tripwireClip;
+    [SerializeField] private AudioClip emptyClip;
+    [SerializeField] private AudioClip finishedShootingClip;
+    [SerializeField] private AudioClip walkClip;
+    [SerializeField] private AudioClip fellInHoleClip;
+    [SerializeField] private AudioClip jobClip;
     // Add new sounds here as they are implemented
 
     [Range(0f,1f)] public float musicVolume = 0.5f;
@@ -96,6 +109,8 @@ public class AudioManager : MonoBehaviour
         source.clip = clip;
         source.volume = sfxVolume;
         source.spatialBlend = 0f; // Makes sound play at any distance from audio source
+        source.loop = false;
+        if(type == SoundType.Walk) { source.loop = true; }
         source.Play();
 
         activeSounds[type] = source; // Adds sound to active sound list
@@ -125,10 +140,16 @@ public class AudioManager : MonoBehaviour
             case SoundType.Damage: return damageClip;
             case SoundType.Refill: return refillClip;
             case SoundType.Death: return deathClip;
+            case SoundType.DeathLoud: return deathLoudClip;
             case SoundType.Hole: return holeClip;
             case SoundType.Enemy: return enemyClip;
             case SoundType.Resevoir: return resevoirClip;
             case SoundType.Tripwire: return tripwireClip;
+            case SoundType.Empty: return emptyClip;
+            case SoundType.FinishedShooting: return finishedShootingClip;
+            case SoundType.Walk: return walkClip;
+            case SoundType.Fell: return fellInHoleClip;
+                case SoundType.Job: return jobClip;
             default: return null;
         }
     }
@@ -138,7 +159,7 @@ public class AudioManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
 
-        if (activeSounds.ContainsKey(type))
+        if (activeSounds.ContainsKey(type) && type != SoundType.Walk)
         {
             Destroy(activeSounds[type]);
             activeSounds.Remove(type);
@@ -162,6 +183,11 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.EnemyApproached += OnEnemyApproach;
         PlayerEventDispatcher.ResevoirApproached += OnResevoirApproach;
         PlayerEventDispatcher.TripwireTriggered += OnTripwire;
+        PlayerEventDispatcher.GunEmptied += OnEmpty;
+        PlayerEventDispatcher.PlayerMovementStarted += OnStartMove;
+        PlayerEventDispatcher.PlayerMovementStopped += OnStopMove;
+        PlayerEventDispatcher.PlayerDied += OnDeath;
+        PlayerEventDispatcher.PlayerFellInHole += OnFall;
 
     }
 
@@ -178,6 +204,11 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.EnemyApproached -= OnEnemyApproach;
         PlayerEventDispatcher.ResevoirApproached -= OnResevoirApproach;
         PlayerEventDispatcher.TripwireTriggered -= OnTripwire;
+        PlayerEventDispatcher.GunEmptied -= OnEmpty;
+        PlayerEventDispatcher.PlayerMovementStarted -= OnStartMove;
+        PlayerEventDispatcher.PlayerMovementStopped -= OnStopMove;
+        PlayerEventDispatcher.PlayerDied += OnDeath;
+        PlayerEventDispatcher.PlayerFellInHole -= OnFall;
     }
 
     private void OnReload()
@@ -192,6 +223,7 @@ public class AudioManager : MonoBehaviour
     private void OnGunStoppedShooting()
     {
         Debug.Log("Gun Shooting Stopped Recieved By Audio Manager");
+        AudioManager.Instance.PlaySound(SoundType.FinishedShooting);
         AudioManager.Instance.StopSound(SoundType.Shoot);
     }
     private void OnJump()
@@ -212,7 +244,17 @@ public class AudioManager : MonoBehaviour
     }
     private void OnDeath()
     {
-        AudioManager.Instance.PlaySound(SoundType.Death);
+        AudioManager.Instance.StopSound(SoundType.Walk);
+        float num = Random.Range(1, 100);
+        if (num == 7)
+        {
+            AudioManager.Instance.PlaySound(SoundType.DeathLoud);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound(SoundType.Death);
+        }
+        Debug.Log("Play Death Sound");
     }
     private void OnHoleApproach()
     {
@@ -230,5 +272,21 @@ public class AudioManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySound(SoundType.Tripwire);
     }
+    private void OnEmpty()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Empty);
+    }
+    private void OnStartMove()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Walk);
+    }
+    private void OnStopMove()
+    {
+        AudioManager.Instance.StopSound(SoundType.Walk);
+    }
 
+    private void OnFall()
+    {
+        AudioManager.Instance.PlaySound(SoundType.Fell);
+    }
 }

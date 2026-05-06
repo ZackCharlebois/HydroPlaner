@@ -17,8 +17,10 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 velocity;
 
-    bool isGrounded;
-    bool isMoving;
+    private bool isGrounded;
+    private bool isMoving;
+    private bool wasMoving;
+    private bool isDead = false;
 
     private Vector3 lastPosition = new Vector3(0f, 0f, 0f);
 
@@ -32,48 +34,82 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Ground check
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        // REseting the default velocity
-        if(isGrounded && velocity.y < 0)
+        float num = Random.Range(0, 100000);
+        if(num == 7)
         {
-            velocity.y = -2f;
+            AudioManager.Instance.PlaySound(SoundType.Job);
         }
+            if (controller == null) return;
+            // Ground check
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            // REseting the default velocity
+            if (isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;
+            }
 
-        // Getting the inputs
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+            // Getting the inputs
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
 
-        // Create the moving vector
-        Vector3 move = transform.right * x + transform.forward * z; //(right - red axis, forward - blue axis)
+            // Create the moving vector
+            Vector3 move = transform.right * x + transform.forward * z; //(right - red axis, forward - blue axis)
 
-        //Actually move player
-        controller.Move(move * speed * Time.deltaTime);
+            //Actually move player
+            controller.Move(move * speed * Time.deltaTime);
 
-        //Check if player can jump
-        if (Input.GetButtonDown("Jump") && isGrounded && canJump)
-        {
-            Debug.Log("Jumping");
-            //Actually jumping
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+            //Check if player can jump
+            if (Input.GetButtonDown("Jump") && isGrounded && canJump)
+            {
+                Debug.Log("Jumping");
+                //Actually jumping
+                PlayerEventDispatcher.TriggerPlayerJumped();
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
 
-        //Falling down
-        velocity.y += gravity * Time.deltaTime;
+            //Falling down
+            velocity.y += gravity * Time.deltaTime;
 
-        //Executing the jump
-        controller.Move(velocity * Time.deltaTime);
+            //Executing the jump
+            controller.Move(velocity * Time.deltaTime);
 
-        if (lastPosition != gameObject.transform.position && isGrounded == true)
-        {
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
-        }
+            bool isCurrentlyMoving = (lastPosition != transform.position) && isGrounded;
 
-        lastPosition = gameObject.transform.position;
+            // Detect start moving
+            if (!wasMoving && isCurrentlyMoving)
+            {
+                PlayerEventDispatcher.TriggerPlayerMovementStarted();
+            }
+
+            // Detect stop moving
+            if (wasMoving && !isCurrentlyMoving)
+            {
+                PlayerEventDispatcher.TriggerPlayerMovementStopped();
+            }
+
+            // Update states
+            isMoving = isCurrentlyMoving;
+            wasMoving = isCurrentlyMoving;
+
+            lastPosition = gameObject.transform.position;
+        
+    }
+
+    private void OnEnable()
+    {
+        PlayerEventDispatcher.PlayerDied += OnDeath;
+    }
+
+    private void OnDisable()
+    {
+        PlayerEventDispatcher.PlayerDied -= OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        isDead = true;
+        Destroy(controller);
+        Destroy(this.GetComponent<Rigidbody>());
     }
 
     public void AcceptDefeat()

@@ -8,25 +8,23 @@ public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private int maxHp = 3;
     [SerializeField] private int hp = 3;
+    [SerializeField] private int damage = 1;
 
-    [SerializeField] private UnityEvent OnDamaged;
-    [SerializeField] private UnityEvent OnZero;
-
-
-
-
-    public void Damage(int hpAmount)
+    private void OnEnable()
     {
-        hp -= hpAmount;
-        //Debug.Log("hp amount changed by " + hpAmount + " and is now " + hp);
+        PlayerEventDispatcher.PlayerDamaged += OnDamaged;
+    }
+    private void OnDisable()
+    {
+        PlayerEventDispatcher.PlayerDamaged -= OnDamaged;
+    }
 
-        //tell any subscriber to this event that damage happened!
-        OnDamaged?.Invoke();
-
-        //If we hit zero health, raise the OnZero event with all that registered
+    private void OnDamaged()
+    {
+        hp -= damage;
         if (hp <= 0)
         {
-            OnZero?.Invoke();
+            PlayerEventDispatcher.TriggerPlayerDied();
         }
     }
 
