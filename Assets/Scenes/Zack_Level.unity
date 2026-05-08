@@ -18435,11 +18435,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterColor: {r: 0, g: 0.11731386, b: 1, a: 1}
   glowIntensity: 500
-  darkMode: 0
+  darkMode: 1
   lightMode: 0
-  default_material: {fileID: 2100000, guid: 638bc474ddf12bc44a9b4dba72e5eaf3, type: 2}
-  dark_material: {fileID: 2100000, guid: 22ee0695f5fb6304b9dea31acd21d058, type: 2}
-  light_material: {fileID: 2100000, guid: a1e220277dfff81419d840197dd328fa, type: 2}
+  default_material: {fileID: 0}
+  dark_material: {fileID: 0}
+  light_material: {fileID: 0}
 --- !u!114 &456623598 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7277790531472684929, guid: 9d5db7f8ea1957345989d2e8eb7d1208,
@@ -21981,7 +21981,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bbae232d3b7ecb545947d7488cf7f956, type: 2}
+  - {fileID: 2100000, guid: fb659c98d6ac4db41b88596ff2c4e2e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
