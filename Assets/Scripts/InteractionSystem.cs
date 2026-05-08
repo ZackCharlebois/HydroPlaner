@@ -63,6 +63,13 @@ public class InteractionSystem : MonoBehaviour
             }
 
         }
+        else
+        {
+            text.text = "";
+            sliderObject.SetActive(false);
+            holdTimer = 0;
+            slider.value = 0;
+        }
     }
 
     public void resoivor(WaterGun waterGun) //Refills the water gun
