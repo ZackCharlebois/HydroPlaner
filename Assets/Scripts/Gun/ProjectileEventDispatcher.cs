@@ -10,10 +10,12 @@ public class ProjectileEventDispatcher : MonoBehaviour
 
     public static event GameEventHandler ParticleCollided; 
 
+
     public static void TriggerParticleCollided(GameObject hitObject)
     {
         ParticleCollided?.Invoke(hitObject);
     }
+
 
 
 }

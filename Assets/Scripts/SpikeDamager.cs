@@ -16,9 +16,6 @@ public class SpikeDamager : MonoBehaviour
             Debug.Log("Hit");
             PlayerEventDispatcher.TriggerPlayerDamaged();
 
-            //Recoil maybe add later?
-            //Vector3 awayDirection = (Vector3)(other.transform.position - transform.position);
-            //other.transform.GetComponent<PlayerMovement>()?.Recoil(awayDirection * 3f);
         }
     }
 }

@@ -27,10 +27,14 @@ public class WaterCollision : MonoBehaviour
             Vector3 pos = collisionEvents[i].intersection;
             Vector3 normal = collisionEvents[i].normal;
 
-            Debug.Log(other.name);
+            Quaternion randomAngle = Quaternion.AngleAxis(UnityEngine.Random.Range(0f, 360f), Vector3.forward);
+
+
             ProjectileEventDispatcher.TriggerParticleCollided(other); //Goes to the ProjectileEventDispatcher
-            GameObject splashAtObject = Instantiate(splash[0], pos, Quaternion.LookRotation(-normal));//Creates a splash at the position of the collision
+            GameObject splashAtObject = Instantiate(splash[0], pos, Quaternion.LookRotation(-normal) * randomAngle);//Creates a splash at the position of the collision
             splashAtObject.transform.SetParent(other.transform);
+
+
 
             Destroy(splashAtObject, timeLife);
 

@@ -8,9 +8,9 @@ public class WaterGun : MonoBehaviour
 {
 
     //Set high for testing***
-    public float ammo = 300f;
-    public float maxAmmo = 300f;
-    [SerializeField] private float fireRate = 10f;
+    public float ammo = 50f;
+    public float maxAmmo = 50f;
+    [SerializeField] private float fireRate = .1f;
     
     private ParticleSystem ps;
 
@@ -19,9 +19,13 @@ public class WaterGun : MonoBehaviour
 
     private bool playerDead = false;
 
+    //initial velocity for better particle physics
+    private ParticleSystem.VelocityOverLifetimeModule velocityModule;
+
     private void Awake()
     {
         ps = GetComponent<ParticleSystem>();
+        velocityModule = ps.velocityOverLifetime;
     }
     private void Update()
     {
@@ -32,6 +36,7 @@ public class WaterGun : MonoBehaviour
         }
         HandleInput();
         HandleShooting();
+        ParticlePhysics();
     }
 
     private void HandleInput() // Handles user inputs for shooting and stopping shooting
@@ -96,6 +101,33 @@ public class WaterGun : MonoBehaviour
             return;
         }
         ammo -= fireRate;
+    }
+
+
+
+    //All code to make the water feel more natural and it gets initial velocity based on your movement
+
+    ParticleSystem.VelocityOverLifetimeModule vel;
+    PlayerMovement playerMovement;
+    private void Start()
+    {
+
+        vel = ps.velocityOverLifetime;
+        vel.enabled = true;
+        vel.space = ParticleSystemSimulationSpace.World; // Or Local
+        playerMovement = GetComponentInParent<PlayerMovement>();
+    }
+    public void ParticlePhysics()
+    {
+        Vector3 extraVelocity = Vector3.zero;
+
+        extraVelocity = playerMovement.GetVelocity();
+
+        vel.x = new ParticleSystem.MinMaxCurve(extraVelocity.x);
+        vel.y = new ParticleSystem.MinMaxCurve(extraVelocity.y);
+        vel.z = new ParticleSystem.MinMaxCurve(extraVelocity.z);
+
+
     }
 
     private void OnEnable()
