@@ -2207,11 +2207,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 270152895085387195, guid: 72c4c2d263e083147aae5ce59df3471e,
-        type: 3}
-      propertyPath: m_LightProbeUsage
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1061529886762224339, guid: 72c4c2d263e083147aae5ce59df3471e,
         type: 3}
       propertyPath: m_Name
@@ -2265,21 +2260,6 @@ PrefabInstance:
     - target: {fileID: 1805863019973621449, guid: 72c4c2d263e083147aae5ce59df3471e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5758106617392858284, guid: 72c4c2d263e083147aae5ce59df3471e,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.93548393
-      objectReference: {fileID: 0}
-    - target: {fileID: 5758106617392858284, guid: 72c4c2d263e083147aae5ce59df3471e,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5758106617392858284, guid: 72c4c2d263e083147aae5ce59df3471e,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
