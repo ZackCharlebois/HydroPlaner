@@ -117,6 +117,11 @@ public class PlayerMovement : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public Vector3 GetVelocity()
+    {
+        return transform.position - lastPosition;
+    }
+
 
 
 }
