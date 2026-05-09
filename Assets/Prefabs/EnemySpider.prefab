@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 222196244374769271}
   - component: {fileID: 6752824308926516034}
   m_Layer: 0
-  m_Name: TEMPEnemySpider
+  m_Name: EnemySpider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
