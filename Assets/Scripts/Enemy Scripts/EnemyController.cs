@@ -8,14 +8,12 @@ using Unity.VisualScripting;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float patrolDelay = 1;
-    [SerializeField] private float patrolSpeed = 1;
+    [SerializeField] private float patrolSpeed = 15;
 
     private WaypointPath _waypointPath;
     private Vector3 _patrolTargetPosition;
 
     private Vector3 _direction;
-    private RaycastHit _lastRayCast;
 
     // Awake is called before Start
     private void Awake()
@@ -33,8 +31,6 @@ public class EnemyController : MonoBehaviour
 
             _direction = _patrolTargetPosition - transform.position;
         }
-
-
     }
 
     private void FixedUpdate()
@@ -51,63 +47,33 @@ public class EnemyController : MonoBehaviour
         //time to get the next waypoint
 
 
-
-
-
-
-        //this if/else is not in the video (it was made in the GameManager videos)
-        //Be sure to update the line in the if clause to match the change in the
-        //video instead of adding it above
-
-        //UPDATE: how velocity is set
-        //normalized reduces dir magnitude to 1, so we can
-        //keep at the speed we want by multiplying
-        Vector3 _lastPosition = transform.position;
-
-
-
         RaycastHit hit;
+
+        //Grounded is the position on the relative ground the spider should be
         Vector3 grounded = transform.position;
-        Vector3 planeDir = _direction;
-
-
-        //I WILL ADD COMMENTS SOON I AM VERY TIRED!!!!
 
         //Designed so hopefully if a RayCast misses it still kind of works
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down + Vector3.Scale(transform.forward, new Vector3(.0f, .0f, .0f))), out hit, 1000f))
+        if (Physics.Raycast(transform.position, -transform.up + Vector3.Scale(transform.forward, new Vector3(Time.deltaTime * patrolSpeed, Time.deltaTime * patrolSpeed, Time.deltaTime * patrolSpeed)), out hit, 1000f))
         {
-            Quaternion targetRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 20f);
-
-
+            //A RayCast is shot down and at an angle forward, and the spider is put at that location
             grounded = hit.point + hit.normal * (transform.localScale.y / 2);
 
+            //Direction towards the next point
+            _direction = _patrolTargetPosition - transform.position;
 
-            //Will only update the direction IF it changes what wall it is on
-            if (_lastRayCast.normal != hit.normal)
-            {
-                _direction = _patrolTargetPosition - transform.position;
-                //_direction = Vector3.Scale(_direction, flip(hit.normal));
+            //Since the spider follows a plane, we can project the point onto the plane it is on to ignore the "y" axis
+            Vector3 planeDir = Vector3.ProjectOnPlane(_direction, hit.normal).normalized;
 
-            }
+            //Point towards the waypoint
+            Quaternion targetRotation = Quaternion.LookRotation(planeDir, hit.normal);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 30f);
 
-
-
-
-            planeDir = _direction;
-            //planeDir = _direction - (Vector3.Scale(_patrolTargetPosition, hit.normal) - (Vector3.Scale(transform.position, hit.normal)));
-
-
-            _lastRayCast = hit;
         }
 
 
-        Vector3 move = planeDir.normalized * patrolSpeed * Time.deltaTime;
-        
+        transform.position = grounded;
 
-        transform.position = grounded + move;
-
-
+        //If close enough, get next point
         if ((_patrolTargetPosition - transform.position).magnitude < .3)
         {
             //get next waypoint
@@ -120,14 +86,5 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    private static Vector3 flip(Vector3 v)
-    {       
-        float x = Mathf.Abs(v.x);
-        float y = Mathf.Abs(v.y);   
-        float z = Mathf.Abs(v.z); 
-
-
-        return new Vector3(1 - x, 1 - y, 1 - z);
-    }
 
 }
