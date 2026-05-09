@@ -422,7 +422,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 821044e392072ca4591d9489eb37abab, type: 2}
+  - {fileID: 2100000, guid: 22ee0695f5fb6304b9dea31acd21d058, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1015,7 +1015,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 821044e392072ca4591d9489eb37abab, type: 2}
+  - {fileID: 2100000, guid: 22ee0695f5fb6304b9dea31acd21d058, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2649,7 +2649,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 821044e392072ca4591d9489eb37abab, type: 2}
+  - {fileID: 2100000, guid: 22ee0695f5fb6304b9dea31acd21d058, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3125,6 +3125,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1849208179}
     m_Modifications:
+    - target: {fileID: 222196244374769271, guid: 27ac2df837cb8204d83b0ea89de59793,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 222196244374769271, guid: 27ac2df837cb8204d83b0ea89de59793,
+        type: 3}
+      propertyPath: patrolSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3571777384918065218, guid: 27ac2df837cb8204d83b0ea89de59793,
         type: 3}
       propertyPath: m_Name
@@ -3180,6 +3190,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6256264811161074847, guid: 27ac2df837cb8204d83b0ea89de59793,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 638bc474ddf12bc44a9b4dba72e5eaf3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
