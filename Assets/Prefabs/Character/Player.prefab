@@ -418,7 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2756097216862651435}
   - component: {fileID: 4786432709727940122}
-  - component: {fileID: 5097832069241330785}
+  - component: {fileID: 4182058136250238378}
   - component: {fileID: 5758106617392858284}
   - component: {fileID: 5448674223069762320}
   m_Layer: 0
@@ -459,7 +459,7 @@ MonoBehaviour:
   ammo: 50
   maxAmmo: 50
   fireRate: 0.1
---- !u!114 &5097832069241330785
+--- !u!114 &4182058136250238378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -468,12 +468,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4084885529635066836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73707b4c2fede604f9e0cb3f2250be97, type: 3}
+  m_Script: {fileID: 11500000, guid: e87748e7a27c4f544bdc643e82301b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLife: 10
-  splash:
-  - {fileID: 8633334596033849510, guid: f32af431810f5d24a984342954c5a804, type: 3}
+  paintColor: {r: 0, g: 1, b: 0.8651538, a: 1}
+  minRadius: 0.1
+  maxRadius: 0.5
+  strength: 1
+  hardness: 1
 --- !u!198 &5758106617392858284
 ParticleSystem:
   m_ObjectHideFlags: 0
