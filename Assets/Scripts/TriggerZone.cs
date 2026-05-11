@@ -11,7 +11,9 @@ public enum TriggerType
     Tripwire,
     Death,
     Test,
-    Fall
+    Fall,
+    LevelExit,
+    Checkpoint
 }
 // All purpose player trigger for various things
 // Select what type of trigger zone in the inspector
@@ -64,6 +66,16 @@ public class TriggerZone : MonoBehaviour
                 case TriggerType.Fall:
                     {
                         PlayerEventDispatcher.TriggerPlayerFellInHole();
+                        break;
+                    }
+                case TriggerType.LevelExit:
+                    {
+                        PlayerEventDispatcher.TriggerLevelExited();
+                        break;
+                    }
+                case TriggerType.Checkpoint:
+                    {
+                        PlayerEventDispatcher.TriggerCheckpointTriggered();
                         break;
                     }
                 default: break;

@@ -28,12 +28,15 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static event GameEventHandler PlayerMovementStarted;
     public static event GameEventHandler PlayerMovementStopped;
     public static event GameEventHandler PlayerFellInHole;
+    public static event GameEventHandler PlayerRespawned;
     
     // Other Events
     public static event GameEventHandler HoleApproached;
     public static event GameEventHandler EnemyApproached;
     public static event GameEventHandler ResevoirApproached;
     public static event GameEventHandler TripwireTriggered;
+    public static event GameEventHandler LevelExited;
+    public static event GameEventHandler CheckpointTriggered;
 
     //------------------Gun Events----------------------
     public static void TriggerGunShot()
@@ -95,6 +98,10 @@ public class PlayerEventDispatcher : MonoBehaviour
     {
         PlayerFellInHole?.Invoke();
     }
+    public static void TriggerPlayerRespawned()
+    {
+        PlayerRespawned?.Invoke();
+    }
 
     //-----------------Other Events-----------------------
     public static void TriggerHoleApproached()
@@ -115,6 +122,14 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static void TriggerTripwireTriggered()
     {
         TripwireTriggered?.Invoke();
+    }
+    public static void TriggerLevelExited()
+    {
+        LevelExited?.Invoke();
+    }
+    public static void TriggerCheckpointTriggered()
+    {
+        CheckpointTriggered?.Invoke();
     }
 
     
