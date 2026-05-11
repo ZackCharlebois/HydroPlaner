@@ -456,8 +456,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ec11e4643c53e4994666f44d88eb3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammo: 50
-  maxAmmo: 50
+  ammo: 150
+  maxAmmo: 150
   fireRate: 0.1
 --- !u!114 &4182058136250238378
 MonoBehaviour:
