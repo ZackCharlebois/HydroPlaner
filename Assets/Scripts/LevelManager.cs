@@ -7,24 +7,41 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
 
-    [SerializeField] private Scene prologue;
-    [SerializeField] private Scene level1;
-    [SerializeField] private Scene level2;
-    [SerializeField] private Scene level3;
-    [SerializeField] private Scene level4;
-    [SerializeField] private Scene level5;
+    [SerializeField] private string prologueName;
+    [SerializeField] private string level1Name;
+    [SerializeField] private string level2Name;
+    [SerializeField] private string level3Name;
+    [SerializeField] private string level4Name;
+    [SerializeField] private string level5Name;
     private Scene currentScene;
 
-    [SerializeField] private int level;
     private GameObject player;
     private HashSet<GameObject> checkpoints;
-    [SerializeField] private GameObject currentCheckpoint;
+    
+    private GameObject currentCheckpoint;
+    [SerializeField] private Vector3 currentCheckpointPosition;
+    private bool hasCheckpoint = false;
+    private bool isRespawning = false;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        GetSceneInfo();
+    }
+
+    private void GetSceneInfo()
+    {
         currentScene = SceneManager.GetActiveScene();
-        player = GameObject.FindGameObjectWithTag("Player");
         checkpoints = new HashSet<GameObject>();
+        player = GameObject.FindGameObjectWithTag("Player");
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Checkpoint");
         foreach (GameObject obj in objs)
         {
@@ -37,50 +54,54 @@ public class LevelManager : MonoBehaviour
         PlayerEventDispatcher.LevelExited += OnLevelExited;
         PlayerEventDispatcher.CheckpointTriggered += OnCheckpointTriggered;
         PlayerEventDispatcher.PlayerRespawned += OnPlayerRespawned;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     private void OnDisable()
     {
         PlayerEventDispatcher.LevelExited -= OnLevelExited;
         PlayerEventDispatcher.CheckpointTriggered -= OnCheckpointTriggered;
         PlayerEventDispatcher.PlayerRespawned -= OnPlayerRespawned;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnLevelExited()
     {
-        if (currentScene == prologue)
+        if (currentScene.name == prologueName)
         {
-            SceneManager.SetActiveScene(level1);
+            SceneManager.LoadScene(level1Name);
         }
-        else if (currentScene == level1)
+        else if (currentScene.name == level1Name)
         {
-            SceneManager.SetActiveScene(level2);
+            SceneManager.LoadScene(level2Name);
         }
-        else if (currentScene == level2)
+        else if (currentScene.name == level2Name)
         {
-            SceneManager.SetActiveScene(level3);
+            SceneManager.LoadScene(level3Name);
         }
-        else if (currentScene == level3)
+        else if (currentScene.name == level3Name)
         {
-            SceneManager.SetActiveScene(level4);
+            SceneManager.LoadScene(level4Name);
         }
-        else if (currentScene == level4)
+        else if (currentScene.name == level4Name)
         {
-            SceneManager.SetActiveScene(level5);
+            SceneManager.LoadScene(level5Name);
         }
         else
         {
-            Debug.Log("NO SCENE TO LOAD. ADD SCENES TO LEVELMANAGER TO LOAD THEM");
+            Debug.Log("NO SCENE TO LOAD. ADD SCENE NAMES TO LEVELMANAGER TO LOAD THEM.");
         }
 
+        GetSceneInfo();
     }
 
     private void OnCheckpointTriggered()
     {
-        if (checkpoints == null) return;
-        if (player == null) return;
-
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+        
         GameObject closestCheckpoint = null;
-
         float closestDistance = Mathf.Infinity;
 
         foreach (GameObject checkpoint in checkpoints) //Gets closest checkpoint to player
@@ -93,11 +114,39 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        currentCheckpoint = closestCheckpoint;
+        if (closestCheckpoint != null)
+        {
+            currentCheckpointPosition = closestCheckpoint.transform.position;
+            hasCheckpoint = true;
+        }
     }
 
     private void OnPlayerRespawned()
     {
-        player.transform.position = currentCheckpoint.transform.position;
+        isRespawning = true;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GetSceneInfo();
+
+        if (hasCheckpoint && isRespawning)
+        {
+            StartCoroutine(RespawnAfterLoad());
+        }
+    }
+    private IEnumerator RespawnAfterLoad()
+    {
+        yield return null; //Waits so player is loaded before teleporting to checkpoint
+
+        player.transform.position = currentCheckpointPosition;
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        isRespawning = false;
+    }
+
+    public void ResetCheckpoint()
+    {
+        isRespawning = false;
+        hasCheckpoint = false;
     }
 }

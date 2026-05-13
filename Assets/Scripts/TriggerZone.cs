@@ -75,6 +75,7 @@ public class TriggerZone : MonoBehaviour
                     }
                 case TriggerType.Checkpoint:
                     {
+                        Debug.Log("Checkpoint Triggered");
                         PlayerEventDispatcher.TriggerCheckpointTriggered();
                         break;
                     }

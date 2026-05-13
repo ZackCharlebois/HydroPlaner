@@ -9,6 +9,7 @@ public class MenuScript : MonoBehaviour
     public GameObject pane;
     public Button resume;
     public Button restart;
+    public Button respawn;
     public Button quit;
 
    
@@ -47,6 +48,11 @@ public class MenuScript : MonoBehaviour
             restart.onClick.AddListener(Restart);
         }
 
+        if (respawn != null)
+        {
+            respawn.onClick.AddListener(Respawn);
+        }
+
         if (quit != null)
         {
             quit.onClick.AddListener(Quit);
@@ -78,7 +84,15 @@ public class MenuScript : MonoBehaviour
     void Restart()
     {
         Time.timeScale = 1f;
+        LevelManager.Instance.ResetCheckpoint();
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+
+    void Respawn()
+    {
+        Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        PlayerEventDispatcher.TriggerPlayerRespawned();
     }
     void Quit()
     {
@@ -90,7 +104,7 @@ public class MenuScript : MonoBehaviour
     {
         AudioManager.Instance.PlaySound(SoundType.Job);
         isDead = true;
-
+        //Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
 
