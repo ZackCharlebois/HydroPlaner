@@ -33,7 +33,7 @@ public class PlayerEventDispatcher : MonoBehaviour
     // Other Events
     public static event GameEventHandler HoleApproached;
     public static event GameEventHandler EnemyApproached;
-    public static event GameEventHandler ResevoirApproached;
+    public static event GameEventHandler Mushroom;
     public static event GameEventHandler TripwireTriggered;
     public static event GameEventHandler LevelExited;
     public static event GameEventHandler CheckpointTriggered;
@@ -114,9 +114,9 @@ public class PlayerEventDispatcher : MonoBehaviour
         EnemyApproached?.Invoke();
     }
 
-    public static void TriggerResevoirApproached()
+    public static void TriggerMushroom()
     {
-        ResevoirApproached?.Invoke();
+        Mushroom?.Invoke();
     }
 
     public static void TriggerTripwireTriggered()

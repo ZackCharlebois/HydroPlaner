@@ -7,7 +7,7 @@ public enum TriggerType
     Damage,
     Hole,
     Enemy,
-    Resevoir,
+    Mushroom,
     Tripwire,
     Death,
     Test,
@@ -43,9 +43,9 @@ public class TriggerZone : MonoBehaviour
                         PlayerEventDispatcher.TriggerEnemyApproached();
                         break;
                     }
-                case TriggerType.Resevoir:
+                case TriggerType.Mushroom:
                     {
-                        PlayerEventDispatcher.TriggerResevoirApproached();
+                        PlayerEventDispatcher.TriggerMushroom();
                         break;
                     }
                 case TriggerType.Tripwire:
