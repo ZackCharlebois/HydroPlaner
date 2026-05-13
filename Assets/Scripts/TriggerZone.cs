@@ -7,11 +7,13 @@ public enum TriggerType
     Damage,
     Hole,
     Enemy,
-    Resevoir,
+    Mushroom,
     Tripwire,
     Death,
     Test,
-    Fall
+    Fall,
+    LevelExit,
+    Checkpoint
 }
 // All purpose player trigger for various things
 // Select what type of trigger zone in the inspector
@@ -41,9 +43,9 @@ public class TriggerZone : MonoBehaviour
                         PlayerEventDispatcher.TriggerEnemyApproached();
                         break;
                     }
-                case TriggerType.Resevoir:
+                case TriggerType.Mushroom:
                     {
-                        PlayerEventDispatcher.TriggerResevoirApproached();
+                        PlayerEventDispatcher.TriggerMushroom();
                         break;
                     }
                 case TriggerType.Tripwire:
@@ -64,6 +66,17 @@ public class TriggerZone : MonoBehaviour
                 case TriggerType.Fall:
                     {
                         PlayerEventDispatcher.TriggerPlayerFellInHole();
+                        break;
+                    }
+                case TriggerType.LevelExit:
+                    {
+                        PlayerEventDispatcher.TriggerLevelExited();
+                        break;
+                    }
+                case TriggerType.Checkpoint:
+                    {
+                        Debug.Log("Checkpoint Triggered");
+                        PlayerEventDispatcher.TriggerCheckpointTriggered();
                         break;
                     }
                 default: break;

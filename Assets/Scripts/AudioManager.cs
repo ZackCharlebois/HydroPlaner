@@ -14,7 +14,7 @@ public enum SoundType // Add new sounds here as they are implemented
     DeathLoud,
     Hole,
     Enemy,
-    Resevoir,
+    Mushroom,
     Tripwire,
     Empty,
     FinishedShooting,
@@ -41,7 +41,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip deathLoudClip;
     [SerializeField] private AudioClip holeClip;
     [SerializeField] private AudioClip enemyClip;
-    [SerializeField] private AudioClip resevoirClip;
+    [SerializeField] private AudioClip mushroomClip;
     [SerializeField] private AudioClip tripwireClip;
     [SerializeField] private AudioClip emptyClip;
     [SerializeField] private AudioClip finishedShootingClip;
@@ -72,6 +72,7 @@ public class AudioManager : MonoBehaviour
         if (musicSource)
         {
             musicSource.volume = musicVolume;
+            PlayMusic();
         }
         Debug.Log("Music Initialized");
 
@@ -143,7 +144,7 @@ public class AudioManager : MonoBehaviour
             case SoundType.DeathLoud: return deathLoudClip;
             case SoundType.Hole: return holeClip;
             case SoundType.Enemy: return enemyClip;
-            case SoundType.Resevoir: return resevoirClip;
+            case SoundType.Mushroom: return mushroomClip;
             case SoundType.Tripwire: return tripwireClip;
             case SoundType.Empty: return emptyClip;
             case SoundType.FinishedShooting: return finishedShootingClip;
@@ -181,7 +182,7 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.GunRefillStopped += OnRefillStop;
         PlayerEventDispatcher.HoleApproached += OnHoleApproach;
         PlayerEventDispatcher.EnemyApproached += OnEnemyApproach;
-        PlayerEventDispatcher.ResevoirApproached += OnResevoirApproach;
+        PlayerEventDispatcher.Mushroom += OnMushroom;
         PlayerEventDispatcher.TripwireTriggered += OnTripwire;
         PlayerEventDispatcher.GunEmptied += OnEmpty;
         PlayerEventDispatcher.PlayerMovementStarted += OnStartMove;
@@ -202,7 +203,7 @@ public class AudioManager : MonoBehaviour
         PlayerEventDispatcher.GunRefillStopped -= OnRefillStop;
         PlayerEventDispatcher.HoleApproached -= OnHoleApproach;
         PlayerEventDispatcher.EnemyApproached -= OnEnemyApproach;
-        PlayerEventDispatcher.ResevoirApproached -= OnResevoirApproach;
+        PlayerEventDispatcher.Mushroom -= OnMushroom;
         PlayerEventDispatcher.TripwireTriggered -= OnTripwire;
         PlayerEventDispatcher.GunEmptied -= OnEmpty;
         PlayerEventDispatcher.PlayerMovementStarted -= OnStartMove;
@@ -264,9 +265,9 @@ public class AudioManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySound(SoundType.Enemy);
     }
-    private void OnResevoirApproach()
+    private void OnMushroom()
     {
-        AudioManager.Instance.PlaySound(SoundType.Resevoir);
+        AudioManager.Instance.PlaySound(SoundType.Mushroom);
     }
     private void OnTripwire()
     {
