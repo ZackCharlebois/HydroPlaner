@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,14 +13,17 @@ public class TerrainManager : MonoBehaviour
 
     [SerializeField] private bool darkMode = true;
     [SerializeField] private bool lightMode = false;
+    [SerializeField] private bool liveMode = false;
 
     [SerializeField] private Material default_material;
     [SerializeField] private Material dark_material;
     [SerializeField] private Material light_material;
-    
+
 
     void Awake() //Gets list of all game objects with the "Terrain" tag
     {
+
+
         terrainObjects = new HashSet<GameObject>();
         shootableTerrainObjects = new HashSet<GameObject>(); // Separate list for "ShootableTerrain"
 
@@ -68,6 +72,18 @@ public class TerrainManager : MonoBehaviour
             }
 
         }
+
+
+        if(liveMode)
+        {
+            RenderSettings.ambientIntensity = 0;
+            RenderSettings.reflectionIntensity = 0;
+
+            //RenderSettings.fog = true;
+            //RenderSettings.fogColor = Color.black;
+            //RenderSettings.fogDensity = 0.5f;
+        }
+
     }
 
     private void OnEnable() //Enables event listening
