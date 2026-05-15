@@ -73,6 +73,18 @@ public class TerrainManager : MonoBehaviour
 
         }
 
+        if(lightMode)
+        {
+            RenderSettings.ambientIntensity = 8;
+            RenderSettings.reflectionIntensity = 1;
+
+            RenderSettings.fog = true;
+            RenderSettings.fogColor = Color.white;
+            RenderSettings.fogDensity = 0.4f;
+
+        }
+
+
 
         if(liveMode)
         {
