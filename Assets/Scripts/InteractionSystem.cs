@@ -26,7 +26,7 @@ public class InteractionSystem : MonoBehaviour
         WaterGun waterGun = GetComponentInChildren<WaterGun>();
         RaycastHit hit;
 
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 5f)) //If the player looks at an object, it checks the tag of the object and displays a certain text.
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 5f) && waterGun != null) //If the player looks at an object, it checks the tag of the object and displays a certain text.
         {
             string tag = hit.collider.gameObject.tag;
             switch (tag)
