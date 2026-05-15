@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -39,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         {
             AudioManager.Instance.PlaySound(SoundType.Job);
         }
-            if (controller == null) return;
+            if (controller == null || controller.enabled == false) return;
             // Ground check
             isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
             // REseting the default velocity
@@ -120,6 +121,13 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GetVelocity()
     {
         return transform.position - lastPosition;
+    }
+
+    public void Launch(float launchVelocity)
+    {
+        controller.enabled = false;
+        //gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * launchVelocity);
+        gameObject.GetComponent<Rigidbody>().velocity = (Vector3.up * launchVelocity);
     }
 
 

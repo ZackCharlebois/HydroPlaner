@@ -38,6 +38,7 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static event GameEventHandler LevelExited;
     public static event GameEventHandler CheckpointTriggered;
     public static event GameEventHandler LightTriggered;
+    public static event GameEventHandler GeyserEnabled;
 
     //------------------Gun Events----------------------
     public static void TriggerGunShot()
@@ -136,6 +137,10 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static void TriggerLightTriggered()
     {
         LightTriggered?.Invoke();
+    }
+    public static void TriggerGeyserEnabled()
+    {
+        GeyserEnabled?.Invoke();
     }
 
 

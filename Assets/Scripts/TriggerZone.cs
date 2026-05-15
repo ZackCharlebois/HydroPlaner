@@ -14,7 +14,8 @@ public enum TriggerType
     Fall,
     LevelExit,
     Checkpoint,
-    Light
+    Light,
+    Geyser
 }
 // All purpose player trigger for various things
 // Select what type of trigger zone in the inspector
@@ -83,6 +84,11 @@ public class TriggerZone : MonoBehaviour
                 case TriggerType.Light:
                     {
                         PlayerEventDispatcher.TriggerLightTriggered();
+                        break;
+                    }
+                case TriggerType.Geyser:
+                    {
+                        PlayerEventDispatcher.TriggerGeyserEnabled();
                         break;
                     }
 
