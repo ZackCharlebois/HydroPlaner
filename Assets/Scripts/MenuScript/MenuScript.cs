@@ -12,7 +12,7 @@ public class MenuScript : MonoBehaviour
     public Button respawn;
     public Button quit;
 
-   
+
 
     public bool deadScreen = false;
     [SerializeField] private bool isDead = false;
@@ -38,8 +38,11 @@ public class MenuScript : MonoBehaviour
         Cursor.visible = false;
 
 
+
+
         if (resume != null)
         {
+
             resume.onClick.AddListener(Resume);
         }
 
@@ -53,9 +56,10 @@ public class MenuScript : MonoBehaviour
             respawn.onClick.AddListener(Respawn);
         }
 
+
         if (quit != null)
         {
-            quit.onClick.AddListener(Quit);
+            quit.onClick.AddListener(Quit); 
         }
     }
 
@@ -80,7 +84,6 @@ public class MenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
     }
-
     void Restart()
     {
         Time.timeScale = 1f;
@@ -94,9 +97,11 @@ public class MenuScript : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         PlayerEventDispatcher.TriggerPlayerRespawned();
     }
+
+
     void Quit()
     {
-        Application.Quit();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 
 

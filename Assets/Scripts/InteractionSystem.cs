@@ -80,8 +80,8 @@ public class InteractionSystem : MonoBehaviour
             PlayerEventDispatcher.TriggerGunRefilled();
             sliderObject.SetActive(true);
             holdTimer += Time.deltaTime;
-            slider.value = holdTimer / 3f;
-            if (holdTimer >= 3f)
+            slider.value = holdTimer / 2f;
+            if (holdTimer >= 2f)
             {
                 PlayerEventDispatcher.TriggerGunRefillStopped();
                 waterGun.ammo = waterGun.maxAmmo;

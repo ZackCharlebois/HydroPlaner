@@ -15,7 +15,7 @@ public class LightTriggerer : MonoBehaviour
         PlayerEventDispatcher.LightTriggered -= OnLightTriggered;
     }
 
-    void Start()
+    void Start() 
     {
         lights = new List<Light>(transform.GetComponentsInChildren<Light>());
 
