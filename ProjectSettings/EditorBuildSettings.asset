@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TEST_SCENE.unity
     guid: fa2c09a4ff7e7bd469d0c45456b14d10
+  - enabled: 1
+    path: Assets/Scenes/Hole_Level.unity
+    guid: a2330f7d276e4dc47a098a40185ecae3
+  - enabled: 1
+    path: Assets/Scenes/Spikes_Level.unity
+    guid: 6186e9785efa43e49a3b136a9bb11390
   m_configObjects: {}
