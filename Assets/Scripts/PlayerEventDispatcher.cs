@@ -37,6 +37,7 @@ public class PlayerEventDispatcher : MonoBehaviour
     public static event GameEventHandler TripwireTriggered;
     public static event GameEventHandler LevelExited;
     public static event GameEventHandler CheckpointTriggered;
+    public static event GameEventHandler LightTriggered;
 
     //------------------Gun Events----------------------
     public static void TriggerGunShot()
@@ -132,6 +133,10 @@ public class PlayerEventDispatcher : MonoBehaviour
         CheckpointTriggered?.Invoke();
     }
 
-    
+    public static void TriggerLightTriggered()
+    {
+        LightTriggered?.Invoke();
+    }
+
 
 }

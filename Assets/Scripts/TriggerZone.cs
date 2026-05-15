@@ -13,7 +13,8 @@ public enum TriggerType
     Test,
     Fall,
     LevelExit,
-    Checkpoint
+    Checkpoint,
+    Light
 }
 // All purpose player trigger for various things
 // Select what type of trigger zone in the inspector
@@ -79,6 +80,12 @@ public class TriggerZone : MonoBehaviour
                         PlayerEventDispatcher.TriggerCheckpointTriggered();
                         break;
                     }
+                case TriggerType.Light:
+                    {
+                        PlayerEventDispatcher.TriggerLightTriggered();
+                        break;
+                    }
+
                 default: break;
             }
         }
