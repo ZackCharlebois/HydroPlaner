@@ -5,6 +5,8 @@ using UnityEngine;
 // Handles projectile collisions with Terrain elements
 public class TerrainManager : MonoBehaviour
 {
+    public static PlayerPrefScore playerPrefScore;
+
     private HashSet<GameObject> terrainObjects;
     private HashSet<GameObject> shootableTerrainObjects;
 
@@ -85,6 +87,8 @@ public class TerrainManager : MonoBehaviour
         }
 
     }
+
+
 
     private void OnEnable() //Enables event listening
     {

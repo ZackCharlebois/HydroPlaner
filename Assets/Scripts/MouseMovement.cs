@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MouseMovement : MonoBehaviour
 {
+    public static PlayerPrefScore playerPrefScore;
+
     public float mouseSensitivity = 500f;
 
     float xRotation = 0f;
@@ -16,11 +18,20 @@ public class MouseMovement : MonoBehaviour
 
     void Start()
     {
-        //Locking the cursor and making it invisible
+        mouseSensitivity = playerPrefScore.GetSensitivity();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
- 
+    private void Awake()
+    {
+        playerPrefScore = FindObjectOfType<PlayerPrefScore>();
+        if (playerPrefScore != null)
+        {
+            mouseSensitivity = playerPrefScore.getSensitivity();
+        }
+    }
+
+
     void Update()
     {
         if (playerDead) return;

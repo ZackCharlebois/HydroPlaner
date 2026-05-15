@@ -55,7 +55,7 @@ public class MainMenu : MonoBehaviour
         {
             for (int i = 0; i < levelButtons.Length; i++)
             {
-                int index = i + 1; // Capture the current value of i
+                int index = i + 1;
                 levelButtons[i].onClick.AddListener(() => SceneManager.LoadScene(index));
             }
         }
