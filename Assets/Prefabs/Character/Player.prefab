@@ -1113,8 +1113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ec11e4643c53e4994666f44d88eb3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammo: 150
-  maxAmmo: 150
+  ammo: 350
+  maxAmmo: 350
   fireRate: 0.1
 --- !u!114 &7160824193186279461
 MonoBehaviour:
@@ -1216,7 +1216,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 4.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -6845,7 +6845,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ab98bf64bae04c049843de32f24e2830, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -8008,7 +8008,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -693, y: -30.99997}
+  m_AnchoredPosition: {x: -693, y: -31}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &615423836694822572
@@ -8273,7 +8273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21291a9a12bfe894ea116928890fe0a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 400
+  mouseSensitivity: 500
 --- !u!143 &5498863221786981874
 CharacterController:
   m_ObjectHideFlags: 0

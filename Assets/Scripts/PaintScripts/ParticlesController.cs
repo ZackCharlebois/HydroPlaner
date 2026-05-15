@@ -42,7 +42,7 @@ public class ParticlesController: MonoBehaviour{
     private IEnumerator destroyParticle(Paintable p, Vector3 pos, float radius, float hardness, float strength) //I added this part - Riley
     {
         Color color = new Color(0, 0, 0, 0); //sets the color to black and the alpha to draw over the mask again
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(6.7f);
         PaintManager.instance.paint(p, pos, radius, hardness, strength, color); 
     }
 }
