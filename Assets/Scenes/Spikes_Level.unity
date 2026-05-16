@@ -3275,10 +3275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0fff9c96af0eff43a635c2157878dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prologueName: 
-  level1Name: 
-  level2Name: 
-  level3Name: 
+  prologueName: MainMenu
+  level1Name: Zack_Level
+  level2Name: Hole_Level
+  level3Name: Spikes_Level
   level4Name: 
   level5Name: 
   currentCheckpointPosition: {x: 0, y: 0, z: 0}
